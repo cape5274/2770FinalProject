@@ -1,4 +1,4 @@
-# 2770FinalProject
+# 2770 Final Project
 ## Priorty Surgery Scheduler
 For my final proejct in 2270 I will be creating a poject that focuses on withn queues and lists in  order to oragnize patient and their surgerys into a number of rooms based off their priority and duration.  
 ## Overview 
