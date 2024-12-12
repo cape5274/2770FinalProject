@@ -37,17 +37,17 @@ struct pq_node{
     float priority;
 }
 // Initiating the queue Referencing assignment 6 that includes sections INSERT
-// in the textbook we are going to be using heap
+// in the textbook we are going to be using heap in order to manage priortiy for the surgeries 
 
 struct pq {
     vector<pq_node> heap;
     int size; 
 
     pq() : size(0) // Initializing  
-    ~pq() = default //Destructor/ deleting to keep memory in check
+    ~pq() = default; //Destructor/ deleting to keep memory in check
 
     void MHPUp(int nodeindex); //Heap up 
-    void MHPDown(int nodeindex): // Heap down 
+    void MHPDown(int nodeindex); // Heap down 
 
     void insert_pq(Surgery surgery, float priortiy); //inserting the surgery into the heap 
     Surgery remove_pg(); // Removing the highest priority sruergy - once it get assigned a room  
@@ -57,7 +57,7 @@ struct pq {
 // Initializing the priority queue
 pq* init_priority_queue(): 
 
-/Function to peek the highest priority surgery 
+//Function to peek the highest priority surgery 
 Surgery peek_pq(pq*& queue);
 
 class scheduler {
@@ -71,6 +71,12 @@ public:
     void scheduleSugeries();
     void printSchedule()
 }
+
+// Now we are going to focus on the scheduler calss and defining thisin order to organize the schedule based 
+// on the avaliable rooms the location has.
+
+
+
 
 
 #endif //  SCHEDULER_H
