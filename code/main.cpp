@@ -14,6 +14,8 @@ int main() {
     Surgery surgery3 = {"Travis Hunter", SurgeryType::Emergent, Priority::Low, 45}; // 45 minutes
     Surgery surgery4 = {"Coach Prime", SurgeryType::Elective, Priority::High, 60}; // 60 minutes
     Surgery surgery5 = {"Bo Nix", SurgeryType::Emergent, Priority::Medium, 300}; // 300
+    Surgery surgery6 = {"Travis Kelce", SurgeryType::Emergent, Priority::High, 240}; // 300
+    Surgery surgery7 = {"Garrett Boles", SurgeryType::Elective, Priority::Low, 45}; // 300
 
     // Add surgeries to the queue
     sched.addSurgery(surgery1, 3);

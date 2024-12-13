@@ -82,17 +82,24 @@ void scheduler::addSurgery(Surgery surgery, float priority) {
     surgeryQueue->insert_pq(newNode); // Adding a procedure to the queue based aoff its assigned priority
 
 } 
+ 
+// added a boolean flag in order to track assignments because the program kept 
+// assignment procedures to the same room. also to help the code run more defined 
+
 
 void scheduler::scheduleSurgeries(){  
     // Start time at 6 AM (360 minutes from midnight)
-    currentTime = 6 * 60;
+    currentTime = 6 * 60;  // We are defining this as the firt possible time a surgery 
+    // could be scheduled 
 
     while (surgeryQueue->size > 0) {
-
+        // Starting the loop as long as the queue is empty 
         Surgery currentSurgery = surgeryQueue->remove_pq();
+        // Using the removed pg function in order to remove the next surgery 
         if (currentSurgery.patName.empty()) {
+            // Checking if there is info is not invalid 
             cout << "Priority Queue is empty!" << endl;
-            break;  // Exit if the queue is empty
+            break;  // Exit if the queue is empty beause there are no surgies to schedule 
         }
 
         bool assigned = false; 
@@ -106,7 +113,9 @@ void scheduler::scheduleSurgeries(){
                 struct tm* timeInfo = localtime(&rawTime);
                 char buffer[80];
                 strftime(buffer, sizeof(buffer), "%H:%M", timeInfo);
-
+                // https://stackoverflow.com/questions/70696610/is-there-an-easier-way-to-get-the-current-time-in-hhmmss-format Reference for why i
+                // represented time, in earlier process steps the time kepy accumulation and I had to search how to manage and display time
+                // property and in the format that I wanted 
 
 
                 cout << "Surgery for patient " << currentSurgery.patName << " assigned to room " << i + 1 << " at time " << put_time(timeInfo, "%H:%M") << endl;; 
@@ -127,14 +136,20 @@ void scheduler::scheduleSurgeries(){
 
 }
 
+// Originally for this printSchedule function the time was prining our in seconds 
+// and it was hard to understand or read. used this stackoverflow forum 
+// https://stackoverflow.com/questions/70696610/is-there-an-easier-way-to-get-the-current-time-in-hhmmss-format 
+// and converted the time in seconds to as structure. and then used a buffer 
 
 void scheduler::printSchedule() {   // This is going to print out our schedule in our main cpp file
-    cout << "Scheduling Summary:" << endl;
+    cout << "Scheduling Summary:" << endl;  // the heading of the summary 
     for (int i = 0; i < roomNum; ++i) {
-
+            // Using roomNum  as the number of loops to perform
         time_t rawTime = roomAvailability[i] * 60; // Convert minutes to seconds
         struct tm* timeInfo = localtime(&rawTime);
         char buffer[80];
+        // Buffer temporaliy hold data while its being processed or transferred 
+        // in this section involves a formatted string that involes time. 
         strftime(buffer, sizeof(buffer), "%H:%M", timeInfo);
         cout << "Room " << i + 1 << " is available at time " << buffer << endl;
     }
