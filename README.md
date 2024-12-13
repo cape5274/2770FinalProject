@@ -29,26 +29,26 @@ For this part I relied heaviliy on Assignment 6 and the chapters that came with 
 
 
 Define SurgeryType enum:
-    EMERGENT
-    ELECTIVE
+    - **EMERGENT**
+    - **ELECTIVE**
 
 Define Priority enum:
-    HIGH
-    MEDIUM
-    LOW
+    - **HIGH**
+    - **MEDIUM**
+    - **LOW**
 
-Define Surgery class:
+### Define Surgery class:
     - patientName: string
     - surgeryType: SurgeryType
     - priority: Priority
     - duration: int  // Surgery duration in minutes
 
-Define PriorityQueue class:
+### Define PriorityQueue class:
     - surgeries: List of Surgery nodes (heap)
     - insertSurgery(surgery: Surgery): Adds surgery to queue based on priority
     - removeSurgery(): Removes the highest priority surgery from the queue
 
-Define Scheduler class:
+### Define Scheduler class:
     - rooms: int  // Number of operating rooms
     - roomAvailability: array[int]  // Tracks availability time for each room
     - surgeryQueue: PriorityQueue  // Queue to manage surgeries
@@ -75,9 +75,7 @@ Define Scheduler class:
 
 We will also create a fake senario in order to test this function and see the outputs of this function.
 
-
-'''
-Main Function:
+### Main Function:
     - Initialize Scheduler with 5 rooms
     - Create sample surgeries with different durations
     - Add surgeries to the queue
