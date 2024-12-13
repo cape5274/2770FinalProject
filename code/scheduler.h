@@ -7,6 +7,7 @@
 #include <vector>
 
 
+
 using namespace std;
 
 // Reference for using the enum classes for this project 
@@ -53,8 +54,8 @@ struct pq {
     void MHPUp(int nodeindex); //Heap up 
     void MHPDown(int nodeindex); // Heap down 
 
-    void insert_pq(Surgery surgery, float priortiy); //inserting the surgery into the heap 
-    Surgery remove_pg(); // Removing the highest priority sruergy - once it get assigned a room  
+    void insert_pq(pq_node newNode); //inserting the surgery into the heap 
+    Surgery remove_pq(); // Removing the highest priority sruergy - once it get assigned a room  
 
 };
 
@@ -68,9 +69,9 @@ private:
     int currentTime;
     pq* surgeryQueue;   // Priority queue for the sugeries
 public:
-    scheduler(int rooms) 
+    scheduler(int rooms); 
 
-    void addSurgery(Surgery surgery, int priority); 
+    void addSurgery(Surgery surgery, float priority); 
 
     void scheduleSurgeries();
 

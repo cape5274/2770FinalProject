@@ -1,4 +1,6 @@
 #include "scheduler.h"
+#include <iomanip>
+#include <ctime>
 
 using namespace std;
 
@@ -50,14 +52,15 @@ Surgery peek_pq(pq*& queue) {
 }
 
 void pq::insert_pq(pq_node newNode) {
-    heap.push_back(newNode);  // Add the new node to the heap
+    heap.push_back(newNode);  // Adding the new node to the heap
     size++;
-    MHPUp(size - 1);
+    MHPUp(size - 1);  // Restore the heap property
 }
 
-Surgery pq::remove_pq(pq*& queue) { 
+Surgery pq::remove_pq() { 
     if (size == 0){ 
-        return "Priority Queue is empty"  // Checking to see if the queue is empty 
+        cout << "Priority Queue is empty!" << endl;
+        return Surgery(); // Checking to see if the queue is empty 
     }
 
     Surgery highestPrioritySurgery = heap[0].surgery; // saving the srugery with the highest priorty 
@@ -81,18 +84,32 @@ void scheduler::addSurgery(Surgery surgery, float priority) {
 } 
 
 void scheduler::scheduleSurgeries(){  
+    // Start time at 6 AM (360 minutes from midnight)
+    currentTime = 6 * 60;
+
     while (surgeryQueue->size > 0) {
-        pq_node currentSurgeryNode = surgeryQueue->remove_pq();
-        Surgery surgery = currentSurgeryNode.surgery;
-        
+
+        Surgery currentSurgery = surgeryQueue->remove_pq();
+        if (currentSurgery.patName.empty()) {
+            cout << "Priority Queue is empty!" << endl;
+            break;  // Exit if the queue is empty
+        }
 
         bool assigned = false; 
 
         for (int i = 0; i < roomNum; ++i) { 
             if (roomAvailability[i] <= currentTime) { 
                 //Assigning the procedure to a room that it is avaliable
-                roomAvailability[i] = currentTime + surgery.duration; 
-                cout << "Surgery for patient " << surgery.patName << " assigned to room " << i + 1 << "at time " << currentTime << endl; 
+                roomAvailability[i] = currentTime + currentSurgery.duration; 
+
+                time_t rawTime = currentTime * 60; // Convert to minutes for proper display
+                struct tm* timeInfo = localtime(&rawTime);
+                char buffer[80];
+                strftime(buffer, sizeof(buffer), "%H:%M", timeInfo);
+
+
+
+                cout << "Surgery for patient " << currentSurgery.patName << " assigned to room " << i + 1 << " at time " << put_time(timeInfo, "%H:%M") << endl;; 
                 // Out statement with the room assignment and the tme that surery will occur in the room 
                 assigned = true; 
                 break;
@@ -101,9 +118,11 @@ void scheduler::scheduleSurgeries(){
         }
 
         if (!assigned) { 
-        cout << "No rooms are avaliable at this time for surgery: " << surgery.patName << endl; 
+        cout << "No rooms are avaliable at this time for surgery: " << currentSurgery.patName << endl; 
             // Added an cout statement is all rooms are taken
         }
+
+        currentTime++ ;
     }
 
 }
@@ -112,6 +131,11 @@ void scheduler::scheduleSurgeries(){
 void scheduler::printSchedule() {   // This is going to print out our schedule in our main cpp file
     cout << "Scheduling Summary:" << endl;
     for (int i = 0; i < roomNum; ++i) {
-        cout << "Room " << i + 1 << " is available at time " << roomAvailability[i] << endl;
+
+        time_t rawTime = roomAvailability[i] * 60; // Convert minutes to seconds
+        struct tm* timeInfo = localtime(&rawTime);
+        char buffer[80];
+        strftime(buffer, sizeof(buffer), "%H:%M", timeInfo);
+        cout << "Room " << i + 1 << " is available at time " << buffer << endl;
     }
 }
