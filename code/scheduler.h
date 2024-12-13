@@ -4,6 +4,8 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
+
 
 using namespace std;
 
@@ -13,15 +15,17 @@ using namespace std;
 // We will be using these in order to define our Priorty values and Surgery Type.
 
 enum class Priority { 
-    High, // Urgent or Emergency 
-    Medium,  // Required 
-    Low,   // Optional or elective 
+    High = 3, // Urgent or Emergency 
+    Medium = 2 ,  // Required 
+    Low = 1,   // Optional or elective 
 };
 
 enum class SurgeryType { 
-    Emergent, 
-    Elective
+    Emergent = 1, 
+    Elective = 2
 };
+
+
 
 // Define the variables that we will take into consideration per surgery
 struct Surgery { 
@@ -35,7 +39,7 @@ struct Surgery {
 struct pq_node{ 
     Surgery surgery; 
     float priority;
-}
+};
 // Initiating the queue Referencing assignment 6 that includes sections INSERT
 // in the textbook we are going to be using heap in order to manage priortiy for the surgeries 
 
@@ -43,7 +47,7 @@ struct pq {
     vector<pq_node> heap;
     int size; 
 
-    pq() : size(0) // Initializing  
+    pq(); // Initializing  
     ~pq() = default; //Destructor/ deleting to keep memory in check
 
     void MHPUp(int nodeindex); //Heap up 
@@ -54,23 +58,24 @@ struct pq {
 
 };
 
-// Initializing the priority queue
-pq* init_priority_queue(): 
-
-//Function to peek the highest priority surgery 
 Surgery peek_pq(pq*& queue);
 
 class scheduler {
 private: 
+// These wwill not be able to be modified outside of the class
     int roomNum;  // room number
-    vector<int> roomAvaliability;// Vector of rooms and when they are free
+    vector<int> roomAvailability;// Vector of rooms and when they are free
+    int currentTime;
     pq* surgeryQueue;   // Priority queue for the sugeries
 public:
-    scheduler(int rooms);
-    void addSurgery(); 
-    void scheduleSugeries();
-    void printSchedule()
-}
+    scheduler(int rooms) 
+
+    void addSurgery(Surgery surgery, int priority); 
+
+    void scheduleSurgeries();
+
+    void printSchedule();  
+};
 
 // Now we are going to focus on the scheduler calss and defining thisin order to organize the schedule based 
 // on the avaliable rooms the location has.
