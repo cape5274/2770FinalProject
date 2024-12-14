@@ -8,6 +8,7 @@ I believe that priority queues can be a powerful tool for hospitals, particularl
 
 ## Overview 
 In a medical setting it is import to be able to organize the surgery schedule based off priorty, and duration of the surgery and the number of operating rooms avalible. This is a consitant issue that is handing in hospital settings. This project owuld be usuful in emergycy type settins or large hostipal with multiples operation rooms they oversee.  
+
 ## Workflow 
 1. Organize Patient on surgery Priority
 2. Schedule surgeries considering prodecure times and room avaliability
@@ -84,8 +85,43 @@ We will also create a fake senario in order to test this function and see the ou
 
 
 ## Problems 
-Heres are some issues that i had to solve while building this code: 
-- Time problem 
-To resolve a time-related issue in the code,  I set an "openning time" for for a facility and then defined that as a private variable so that it wont be able to be edited and then created assignments wiht increments. 
-I added a line that converts the currentTime to minutes by multiplying it by 60 (time_t rawTime = currentTime * 60;). This ensures that the time is properly adjusted for display in the desired format. The localtime(&rawTime) function was then used to convert the rawTime (in seconds) to a struct tm representation, which is needed for formatting the time. I utilized the strftime() function to format the time according to the desired pattern (%H:%M), which represents hours and minutes. This was necessary because the raw currentTime might have been in seconds or an unexpected format, and using this method ensures that the time is displayed correctly for the user. To handle time operations effectively, I also included the necessary headers: <ctime> for time functions and <iomanip> for formatted input/output.
-- issues with node 
+Heres are some issues that I had to solve while building this code: 
+- The currentTime variable is initialized at 6 AM (360 minutes from midnight), representing the earliest possible time a surgery can start. As surgeries are scheduled, the program iterates through each surgery in the priority queue. For each surgery, the currentTime is updated by adding the duration of the surgery (in minutes) to it. This ensures that after a surgery is scheduled, the available time for the operating room is updated accordingly. The program continues scheduling surgeries until there are no more procedures left in the queue, adjusting the time incrementally for each surgery.
+
+The program also tracks the availability of each operating room, updating the room’s availability time after a surgery is assigned to it. This means that if a room is occupied, the program waits until the room becomes available before scheduling another surgery in that room.
+
+- Time Conversion: In the scheduleSurgeries() function, currentTime is converted to seconds (currentTime * 60) because strftime() (used for formatting the time) requires the time to be in seconds. The localtime() function then converts the time in seconds into a tm structure, which can be formatted and displayed using strftime(). strftime() formats the time into a human-readable format (hours and minutes, e.g., 06:00), which is then displayed to the user to indicate when a surgery is scheduled. 
+
+- The priority queue relies on a heap data structure to maintain the order of surgeries based on their priority. When a node (surgery) is removed, the heap property should be restored. However, when replacing a node with heap[nodeIndex] = current_node;, the heap program was not running as desired and it caused issues in surgery scheduling and havingin surgies be assigned to rooms that were not avaliable. I ended up referening a previous assignment and creaing queue MHPDown and MHPUp  whose functions were to ensure the the order was restored as all times when called.
+- 
+
+ # Surgery Scheduler: A Priority-Based Surgery Scheduling System
+
+This project is a simulation of a priority-based surgery scheduling system that assigns surgeries to available operating rooms based on priority and duration. The scheduler is designed to handle multiple rooms and ensure that emergent surgeries get higher priority over elective ones. We can edit the main.cpp file in the repositry and enter different feature that will give different schedules. 
+
+### Features:
+- **Priority Queue**: Surgeries are scheduled based on priority (High, Medium, Low).
+- **Operating Rooms**: The scheduler can handle multiple operating rooms and assign surgeries based on room availability.
+- **Time Management**: It starts scheduling from 6 AM and considers the time it takes for each surgery.
+
+---
+
+
+### **How to Run the Project** 
+
+```
+#### 1. Clone the Repository:
+
+To get started, clone this repository to your local machine using Git.
+
+in your terminal: 
+git clone https://github.com/your-username/surgery-scheduler.git  
+
+#### 2. Complieing the code: 
+make sure that we are in the code folder you can do cd code to get into the folder if needed
+
+cd code
+
+#### 3. Running the code:
+
+Once the code is complied then we can run it by entering ./scheudler  ```
