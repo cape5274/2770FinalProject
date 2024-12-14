@@ -28,11 +28,11 @@ We will try to assign each patient case(surgery) to an avaliable room and crate 
 For this part I relied heaviliy on Assignment 6 and the chapters that came with it, as it focused on priortiy queues. This is a short outline that I used at the begining of tis process to start my code and then later one was changed. 
 
 
-Define SurgeryType enum:
+### Define SurgeryType enum:
     - **EMERGENT**
     - **ELECTIVE**
 
-Define Priority enum:
+### Define Priority enum:
     - **HIGH**
     - **MEDIUM**
     - **LOW**
@@ -85,5 +85,7 @@ We will also create a fake senario in order to test this function and see the ou
 
 ## Problems 
 Heres are some issues that i had to solve while building this code: 
-- Time problem
+- Time problem 
+To resolve a time-related issue in the code,  I set an "openning time" for for a facility and then defined that as a private variable so that it wont be able to be edited and then created assignments wiht increments. 
+I added a line that converts the currentTime to minutes by multiplying it by 60 (time_t rawTime = currentTime * 60;). This ensures that the time is properly adjusted for display in the desired format. The localtime(&rawTime) function was then used to convert the rawTime (in seconds) to a struct tm representation, which is needed for formatting the time. I utilized the strftime() function to format the time according to the desired pattern (%H:%M), which represents hours and minutes. This was necessary because the raw currentTime might have been in seconds or an unexpected format, and using this method ensures that the time is displayed correctly for the user. To handle time operations effectively, I also included the necessary headers: <ctime> for time functions and <iomanip> for formatted input/output.
 - issues with node 
