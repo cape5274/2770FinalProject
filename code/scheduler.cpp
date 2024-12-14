@@ -69,7 +69,7 @@ Surgery pq::remove_pq() {
     heap.pop_back();
     size--;
 
-    MHPDown(0); // Retoringt eh heap my movin the node down 
+    MHPDown(0); // Moving the heap down - the node down 
 
     return highestPrioritySurgery;
 
@@ -85,7 +85,9 @@ void scheduler::addSurgery(Surgery surgery, float priority) {
  
 // added a boolean flag in order to track assignments because the program kept 
 // assignment procedures to the same room. also to help the code run more defined 
-
+// https://stackoverflow.com/questions/7630404/what-is-a-boolean-flag
+// https://cplusplus.com/forum/beginner/61687/ once this was added it helped display results
+// more in the format that i was looking in 
 
 void scheduler::scheduleSurgeries(){  
     // Start time at 6 AM (360 minutes from midnight)
@@ -136,7 +138,7 @@ void scheduler::scheduleSurgeries(){
 
 }
 
-// Originally for this printSchedule function the time was prining our in seconds 
+// Originally for this printSchedule function the time was prining out in seconds with no formatting 
 // and it was hard to understand or read. used this stackoverflow forum 
 // https://stackoverflow.com/questions/70696610/is-there-an-easier-way-to-get-the-current-time-in-hhmmss-format 
 // and converted the time in seconds to as structure. and then used a buffer 
