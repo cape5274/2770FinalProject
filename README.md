@@ -93,7 +93,7 @@ The program also tracks the availability of each operating room, updating the ro
 - Time Conversion: In the scheduleSurgeries() function, currentTime is converted to seconds (currentTime * 60) because strftime() (used for formatting the time) requires the time to be in seconds. The localtime() function then converts the time in seconds into a tm structure, which can be formatted and displayed using strftime(). strftime() formats the time into a human-readable format (hours and minutes, e.g., 06:00), which is then displayed to the user to indicate when a surgery is scheduled. 
 
 - The priority queue relies on a heap data structure to maintain the order of surgeries based on their priority. When a node (surgery) is removed, the heap property should be restored. However, when replacing a node with heap[nodeIndex] = current_node;, the heap program was not running as desired and it caused issues in surgery scheduling and havingin surgies be assigned to rooms that were not avaliable. I ended up referening a previous assignment and creaing queue MHPDown and MHPUp  whose functions were to ensure the the order was restored as all times when called.
-- 
+
 
  # Surgery Scheduler: A Priority-Based Surgery Scheduling System
 
